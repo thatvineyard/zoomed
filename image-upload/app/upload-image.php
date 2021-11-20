@@ -1,10 +1,16 @@
 <?php
 session_start();
 
+if ( $_POST["password"] != "juice" ) {
+  echo "Bad password";
+  return;
+}
+
 if ( isset($_FILES["file"]["type"]) )
 {
   $max_size = 500 * 1024; // 500 KB
-  $destination_directory = "upload/";
+  $destination_directory = "../upload/";
+  $web_directory= "upload/";
   $validextensions = array("jpeg", "jpg", "png");
 
   $temporary = explode(".", $_FILES["file"]["name"]);
@@ -32,11 +38,12 @@ if ( isset($_FILES["file"]["type"]) )
         {
           $sourcePath = $_FILES["file"]["tmp_name"];
           $targetPath = $destination_directory . $_FILES["file"]["name"];
+          $webPath = "/" . $_ENV["BASE_PATH"] . $web_directory . $_FILES["file"]["name"];
           move_uploaded_file($sourcePath, $targetPath);
 
           echo "<div class=\"alert alert-success\" role=\"alert\">";
           echo "<p>Image uploaded successful</p>";
-          echo "<p>File Name: <a href=\"". $targetPath . "\"><strong>" . $targetPath . "</strong></a></p>";
+          echo "<p>File Name: <a href=\"". $webPath . "\"><strong>" . $webPath . "</strong></a></p>";
           echo "<p>Type: <strong>" . $_FILES["file"]["type"] . "</strong></p>";
           echo "<p>Size: <strong>" . round($_FILES["file"]["size"]/1024, 2) . " kB</strong></p>";
           echo "<p>Temp file: <strong>" . $_FILES["file"]["tmp_name"] . "</strong></p>";

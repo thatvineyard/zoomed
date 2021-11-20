@@ -1,0 +1,21 @@
+services:
+  image-upload:
+    build:
+      context: image-upload
+    expose:
+      - 80
+    environment:
+      - BASE_PATH=image-upload/
+  nginx:
+    image: nginx:1.21
+    ports:
+      - 8080:80
+    volumes:
+      - ./environment/nginx/:/etc/nginx/templates/
+      - ./temp:/etc/nginx/conf.d/
+    restart: unless-stopped
+    environment:
+      - BASE_PATH_IMAGE_UPLOAD=image-upload/
+
+volumes:
+  temp:

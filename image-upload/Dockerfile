@@ -13,10 +13,15 @@ RUN a2enmod rewrite
 # RUN composer install
 
 RUN rm /etc/apache2/sites-enabled/*
-COPY environment/apache/zoomed.conf /etc/apache2/sites-available/zoomed.conf
-RUN a2ensite zoomed
+COPY environment/apache/image-upload.conf /etc/apache2/sites-available/image-upload.conf
+RUN echo 'SetEnv BASE_PATH ${BASE_PATH}' > /etc/apache2/conf-enabled/environment.conf
+RUN a2ensite image-upload
 
-RUN install -o www-data -g www-data -d /var/www/public_html/ /var/www/public_html/upload/
-COPY Bootstrap-image-upload-form/index.html /var/www/public_html/
-COPY Bootstrap-image-upload-form/upload-image.js /var/www/public_html/
-COPY Bootstrap-image-upload-form/upload-image.php /var/www/public_html/
+COPY public_html /var/www/public_html
+RUN install -o www-data -g www-data -d /var/www/upload/
+COPY js /var/www/js
+COPY app /var/www/app
+
+WORKDIR /var/www/
+
+ENV BASE_PATH="/"

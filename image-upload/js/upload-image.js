@@ -19,9 +19,9 @@ $(document).ready(function (e) {
 
   var maxsize = 500 * 1024; // 500 KB
 
-  $('#max-size').html((maxsize/1024).toFixed(2));
+  $('#max-size').html((maxsize / 1024).toFixed(2));
 
-  $('#upload-image-form').on('submit', function(e) {
+  $('#upload-image-form').on('submit', function (e) {
 
     e.preventDefault();
 
@@ -29,14 +29,13 @@ $(document).ready(function (e) {
     $('#loading').show();
 
     $.ajax({
-      url: "upload-image.php",
+      url: "app/upload-image.php",
       type: "POST",
       data: new FormData(this),
       contentType: false,
       cache: false,
       processData: false,
-      success: function(data)
-      {
+      success: function (data) {
         $('#loading').hide();
         $('#message').html(data);
       }
@@ -44,15 +43,14 @@ $(document).ready(function (e) {
 
   });
 
-  $('#file').change(function() {
+  $('#file').change(function () {
 
     $('#message').empty();
 
     var file = this.files[0];
     var match = ["image/jpeg", "image/png", "image/jpg"];
 
-    if ( !( (file.type == match[0]) || (file.type == match[1]) || (file.type == match[2]) ) )
-    {
+    if (!((file.type == match[0]) || (file.type == match[1]) || (file.type == match[2]))) {
       noPreview();
 
       $('#message').html('<div class="alert alert-warning" role="alert">Unvalid image format. Allowed formats: JPG, JPEG, PNG.</div>');
@@ -60,11 +58,10 @@ $(document).ready(function (e) {
       return false;
     }
 
-    if ( file.size > maxsize )
-    {
+    if (file.size > maxsize) {
       noPreview();
 
-      $('#message').html('<div class=\"alert alert-danger\" role=\"alert\">The size of image you are attempting to upload is ' + (file.size/1024).toFixed(2) + ' KB, maximum size allowed is ' + (maxsize/1024).toFixed(2) + ' KB</div>');
+      $('#message').html('<div class=\"alert alert-danger\" role=\"alert\">The size of image you are attempting to upload is ' + (file.size / 1024).toFixed(2) + ' KB, maximum size allowed is ' + (maxsize / 1024).toFixed(2) + ' KB</div>');
 
       return false;
     }
