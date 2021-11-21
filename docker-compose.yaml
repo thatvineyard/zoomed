@@ -6,6 +6,13 @@ services:
       - 80
     environment:
       - BASE_PATH=image-upload/
+  image-blog:
+    build:
+      context: image-blog
+    environment:
+      - BASE_PATH=image-blog/
+    ports:
+      - 8081:80
   nginx:
     image: nginx:1.21
     ports:
@@ -16,6 +23,7 @@ services:
     restart: unless-stopped
     environment:
       - BASE_PATH_IMAGE_UPLOAD=image-upload/
+      - BASE_PATH_IMAGE_BLOG=image-blog/
 
 volumes:
   temp:
