@@ -13,6 +13,8 @@ services:
       - BASE_PATH=image-blog/
     ports:
       - 8081:80
+    networks:
+      - zoomed-net
   nginx:
     image: nginx:1.21
     ports:
@@ -24,6 +26,13 @@ services:
     environment:
       - BASE_PATH_IMAGE_UPLOAD=image-upload/
       - BASE_PATH_IMAGE_BLOG=image-blog/
+    networks:
+      - zoomed-net
 
 volumes:
   temp:
+
+networks:
+  zoomed-net:
+    driver: bridge
+
