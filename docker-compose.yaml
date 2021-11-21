@@ -6,6 +6,8 @@ services:
       - 80
     environment:
       - BASE_PATH=image-upload/
+    networks:
+      - zoomed-net
   nginx:
     image: nginx:1.21
     ports:
@@ -16,6 +18,13 @@ services:
     restart: unless-stopped
     environment:
       - BASE_PATH_IMAGE_UPLOAD=image-upload/
+    networks:
+      - zoomed-net
 
 volumes:
   temp:
+
+networks:
+  zoomed-net:
+    driver: bridge
+
