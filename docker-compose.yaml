@@ -6,6 +6,8 @@ services:
       - 80
     environment:
       - BASE_PATH=image-upload/
+    networks:
+      - zoomed-net
   image-blog:
     build:
       context: image-blog
@@ -32,7 +34,7 @@ services:
 volumes:
   temp:
 
+    null
 networks:
   zoomed-net:
     driver: bridge
-
